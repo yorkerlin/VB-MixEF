@@ -1,4 +1,3 @@
-% We compare various approximation of Hessian for VI
 clear all;
 close all;
 setSeed(0);
@@ -78,7 +77,7 @@ init_P = 100*eye(D) + eye(D)./alpha;
 init_m = [1, 1]';
 
 seed = 1;
-ss_0 = 0.2;% step size
+ss_0 = 0.2;%step size
 beta1 = 0; %To enable natural momentum set 0<beta1<1
 
 init_m = [1, 1]';

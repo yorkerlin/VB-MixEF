@@ -1,4 +1,3 @@
-% We compare various approximation of Hessian for VI
 clear all;
 close all;
 setSeed(0);
@@ -66,18 +65,19 @@ w_exact_vi = v(1:D);
 U = v(D+1:end);
 C_exact_vi = diag(U.^2);
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % New Algorithms
 [N,D] = size(X);
 maxIters = 1000;%# of iterations
 y = 2*t-1;
 
-nSamples = 20; %# of MC samples
+nSamples = 20;%# of MC samples
 init_P = 100*eye(D) + eye(D)./alpha;
 init_m = [1, 1]';
 
 seed = 1;
-ss_0 = 0.2; %step size
-beta1 = 0; %To enable natural momentum set 0<beta1<1
+ss_0 = 0.2;%step size
+beta1 = 0;%To enable natural momentum set 0<beta1<1
 
 init_m = [1, 1]';
 init_P = 100*eye(D);
