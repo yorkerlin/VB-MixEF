@@ -1,10 +1,10 @@
-function ld = LogDensApproximation(x1,x2,mixWeights,mixMeans,mixPrecs)
+function d = DensApproximation(x1,x2,mixWeights,mixMeans,mixPrecs)
 
 % dimensions
 nrComponents = length(mixWeights);
 k=length(mixMeans{1});
 
-ld=zeros(size(x1));
+d=zeros(size(x1));
 for i=1:length(x1)
 
 % get densities at x
@@ -16,6 +16,6 @@ for c=1:nrComponents
 end
 
 RBindicator = sampDensPerComp.*mixWeights';
-ld(i) = log(sum(RBindicator));
+d(i) = sum(RBindicator);
 
 end
