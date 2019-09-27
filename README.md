@@ -6,4 +6,4 @@ Code for ICML 2019 paper on Fast and Simple Natural-Gradient Variational Inferen
   * [skewness] added a Matlab [implementation](https://github.com/yorkerlin/VB-MixEF/tree/master/src/matlab/skewness) for the toy example using skew Gaussian and exponentially modified Gaussian. [done] 
   * [multi-modality] added a Matlab [implementation](https://github.com/yorkerlin/VB-MixEF/tree/master/src/matlab/multimodality) for the toy example using MoG. The implementation is based on this [repo](https://github.com/TimSalimans/LinRegVB) [done] 
   * [heavy tails] To add a Matlab implementation for BLR using t-distribution and  symmetric normal inverse Gaussian
-  * To add the Python code for Vadam extensions
+  * To add a Python implementation for Vadam extensions
