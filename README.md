@@ -1,4 +1,4 @@
-Code for ICML 2019 paper on Fast and Simple Natural-Gradient Variational Inference with Mixture of Exponential-family Approximations
+Code for ICML 2019 paper on [Fast and Simple Natural-Gradient Variational Inference with Mixture of Exponential-family Approximations](https://arxiv.org/abs/1906.02914)
 
 * To-do List:
   * added a [poster](https://github.com/yorkerlin/VB-MixEF/blob/master/poster_workshop.pdf) and a technical [report](https://github.com/yorkerlin/VB-MixEF/blob/master/report.pdf) about the gradient identities used in the paper (To appear at the ICML workshop on Stein's method) [done]
