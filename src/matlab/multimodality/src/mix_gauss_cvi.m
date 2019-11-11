@@ -57,10 +57,10 @@ for i=1:(nrSteps)
     %logSampDensPerComp = log( q(z|w) )
 
     [logRBindicator,logTotalSampDens] = CombineMixtureComponents(logMixWeights,logSampDensPerComp);
-    %logRBindicator = log( q(w|z^*) )
-    %logTotalSampDens =log( q(z^*) )
+    %logRBindicator = log( q(w|z) )
+    %logTotalSampDens =log( q(z) )
 
-    %compute log likelihood with prior  log p(z^*,x)
+    %compute log likelihood with prior  log p(z,x)
     [lpDens,grad,hess] = likelihoodFun(zSampled,i);
     grad = num2cell(grad, [1])';
     hess = squeeze( num2cell(hess,[1,2]) );
