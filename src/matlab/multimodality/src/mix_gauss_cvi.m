@@ -1,19 +1,12 @@
-function [mixWeights,mixMeans,mixPrecs] = mix_gauss_cvi(likelihoodFun,nrComponents,nrSteps,init_m,init_P,callbackFun,dataset_name, preIt, nrSamples, stepSize, decay_mix, beta1)
-
-if nargin>11
-    file_name = sprintf('%s-my_method-%d-%.8f-%.8f-%.8f.mat',dataset_name,nrComponents,stepSize,decay_mix,beta1)
-    callbackInfo = zeros(nrSteps,2);
-end
+function [mixWeights,mixMeans,mixPrecs] = mix_gauss_cvi(likelihoodFun,nrComponents,nrSteps,init_m,init_P,callbackFun,dataset_name, preIt, nrSamples, stepSize, decay_mix)
 
 % algorithm settings
 if nargin<7
     preIt=floor(nrSteps/50);
     stepSize = 0.0005; %saliman's 2d
     nrSamples = nrComponents*2;
-    beta1 = 0;
     decay_mix = 0.01;
 end
-assert(beta1 == 0);
 
 % dimension
 k = size(init_m,1);
@@ -127,8 +120,8 @@ for i=1:(nrSteps)
 
     %decrease weight rwt at each iteration
     beta1 = 1.0-1e-8;
-    decay1 = (1.0-beta1)/(1.0-power(beta1,i));
-    rwt = 5e5*decay1;
+    decay1 = (1.0-beta1)/(1.0-power(beta1,i));%expoential weighting (adam-like)
+    rwt = 5e5*decay1;%set this to zero if the entropy regularization on q(w) is not needed.
 
     if nrComponents>1
         g_m_w = g_m_w2(1,1:end-1) - g_m_w2(1,end);
@@ -149,11 +142,7 @@ for i=1:(nrSteps)
         post_dist.mixMeans=mixMeans;
         post_dist.mixPrecs=mixPrecs;
 
-        if nargin>11
-            callbackInfo(i,:) = callbackFun(i,post_dist);
-        else
-            callbackFun(i,post_dist);
-        end
+        callbackFun(i,post_dist);
 
     end
 end
@@ -164,10 +153,6 @@ if nrComponents>1
     logMixWeights(1,1:end-1) = tlam_w - norm_log_w;
     logMixWeights(1,end) = -norm_log_w;
     mixWeights = exp( logMixWeights);
-end
-
-if nargin>11
-    save(file_name,'preIt','nrSamples','stepSize','beta1','decay_mix','nrComponents','nrSteps','init_m','init_P','callbackInfo');
 end
 
 end
