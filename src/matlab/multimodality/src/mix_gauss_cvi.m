@@ -71,7 +71,7 @@ for i=1:(nrSteps)
     %%sxyWeights = E_{q(w|z)} [ log p(z,x) - log q(z)  ]
     [log_sxyWeights sig]= logMatrixProd(logRBindicator,(lpDens-logTotalSampDens')/nrSamples);
 
-    g_m_w2 = exp(log_sxyWeights  - log_sxxWeights) .* sig;
+    g_m_w2 = exp(log_sxyWeights  - log_sxxWeights) .* sig; %Note: q(w|z)/q(w) = q(z|w)/q(z) = \delta (defined at the paper)
     g_m_w2(sig==0) = 0;
     g_m_w2= g_m_w2';
 
