@@ -1,5 +1,5 @@
 % derivatives of negative log GMM
-function [grb,hrb] = neg_log_gmm(x,logRBindicator,mixMeans,mixPrecs,c)
+function [grb,hrb] = neg_log_gmm(x,logRBindicator,mixMeans,mixPrecs)
 %q(z) = GMM(z)
 
 % gradient
@@ -12,7 +12,7 @@ grb = -gn;
 
 if nargout>1
     % hessian
-    hrb = 0*mixPrecs{c};
+    hrb = 0*mixPrecs{1};
     for j=1:length(mixMeans)
         %hrb = -\nabla_z^2 log q(z)
         hrb = hrb + weightProd(logRBindicator(j),mixPrecs{j}) - weightProd(logRBindicator(j),(mixPrecs{j}*(mixMeans{j}-x)-gn)*(mixPrecs{j}*(mixMeans{j}-x))');

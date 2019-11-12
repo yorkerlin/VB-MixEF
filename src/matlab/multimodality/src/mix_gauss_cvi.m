@@ -24,14 +24,6 @@ end
 
 mixWeights = ones(1,nrComponents)/nrComponents;
 
-%gradient
-gmu = cell(nrComponents,1);
-gV = cell(nrComponents,1);
-for c=1:nrComponents
-    gmu{c} = 0*mixMeans{c};
-    gV{c} = 0*mixPrecs{c};
-end
-
 if nrComponents>1
     tlam_w = log( mixWeights(1,1:end-1) ) - log( mixWeights(1,end) );
     g_mean_m_w = zeros(1,nrComponents-1);
@@ -70,29 +62,27 @@ for i=1:(nrSteps)
     %sxyWeights = matrixProd(logRBindicator,(lpDens-logTotalSampDens')/nrSamples);
     %%sxyWeights = E_{q(w|z)} [ log p(z,x) - log q(z)  ]
     [log_sxyWeights sig]= logMatrixProd(logRBindicator,(lpDens-logTotalSampDens')/nrSamples);
-
     g_m_w2 = exp(log_sxyWeights  - log_sxxWeights) .* sig; %Note: q(w|z)/q(w) = q(z|w)/q(z) = \delta (defined at the paper)
     g_m_w2(sig==0) = 0;
     g_m_w2= g_m_w2';
 
     %the following double loop can be improved by using parallelism
-    for c=1:nrComponents
-        sH = zeros(k,k);
-        sa = zeros(k,1);
-
-        for j=1:nrSamples
-            %compute the entropy term
-            [grb,hrb] = neg_log_gmm(zSampled(:,j),logRBindicator(:,j),mixMeans,mixPrecs,c);
-            % grb = - \nabla_z log q(z)
-            % hrb = - \nabla_z^2 log q(z)
-
+    sa2 = zeros(k,nrComponents);
+    sH2 = zeros(k,k,nrComponents);
+    for j=1:nrSamples
+        %compute the entropy term
+        [grb,hrb] = neg_log_gmm(zSampled(:,j),logRBindicator(:,j),mixMeans,mixPrecs);
+        % grb = - \nabla_z log q(z^*)
+        % hrb = - \nabla_z^2 log q(z^*)
+        for c=1:nrComponents
             lwt = logRBindicator(c,j) - log_sxxWeights(c);
-            sa = sa + weightProd(lwt,grad{j}+grb);
-            sH = sH + weightProd(lwt,hess{j}+hrb);
+            sa2(:,c) = sa2(:,c) + weightProd(lwt,grad{j}+grb);
+            sH2(:,:,c) = sH2(:,:,c) + weightProd(lwt,hess{j}+hrb);
         end
-        gmu{c} = sa/nrSamples;
-        gV{c} = sH/(2*nrSamples);
     end
+    gmu = sa2/nrSamples;
+    gV = sH2/(2.0*nrSamples);
+
 
     lr1 = stepSize;
 
@@ -101,7 +91,7 @@ for i=1:(nrSteps)
     while 1
         try
             while c<=nrComponents
-                chol( mixPrecs{c} - (2*lr1*(gV{c})) );
+                chol( mixPrecs{c} - (2*lr1*(gV(:,:,c))) );
                 c = c+1;
             end
         catch
@@ -112,8 +102,8 @@ for i=1:(nrSteps)
     end
 
     for c=1:nrComponents
-        mixPrecs{c} = mixPrecs{c} - 2*lr1*(gV{c});
-        mixMeans{c} = mixMeans{c} + lr1*(mixPrecs{c}\gmu{c});
+        mixPrecs{c} = mixPrecs{c} - 2*lr1*gV(:,:,c);
+        mixMeans{c} = mixMeans{c} + lr1*(mixPrecs{c}\gmu(:,c));
     end
 
     lr2 = lr1*decay_mix;
