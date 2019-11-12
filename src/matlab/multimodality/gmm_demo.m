@@ -5,7 +5,7 @@ clc
 setSeed(1);
 
 % settings
-nrSteps=1e5;
+nrSteps=5e4;
 
 % load data
 load('./datasets/cancermortality.mat')

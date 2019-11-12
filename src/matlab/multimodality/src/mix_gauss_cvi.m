@@ -3,7 +3,7 @@ function [mixWeights,mixMeans,mixPrecs] = mix_gauss_cvi(likelihoodFun,nrComponen
 % algorithm settings
 if nargin<7
     preIt=floor(nrSteps/50);
-    stepSize = 0.0005; %saliman's 2d
+    stepSize = 0.0008; %saliman's 2d
     nrSamples = nrComponents*2;
     decay_mix = 0.01;
 end
