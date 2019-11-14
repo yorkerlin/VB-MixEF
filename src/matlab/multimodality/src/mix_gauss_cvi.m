@@ -62,7 +62,7 @@ for i=1:(nrSteps)
     %sxyWeights = matrixProd(logRBindicator,(lpDens-logTotalSampDens')/nrSamples);
     %%sxyWeights = E_{q(w|z)} [ log p(z,x) - log q(z)  ]
     [log_sxyWeights sig]= logMatrixProd(logRBindicator,(lpDens-logTotalSampDens')/nrSamples);
-    g_m_w2 = exp(log_sxyWeights  - log_sxxWeights) .* sig; %Note: q(w|z)/q(w) = q(z|w)/q(z) = \delta (defined at the paper)
+    g_m_w2 = exp(log_sxyWeights  - log_sxxWeights) .* sig;
     g_m_w2(sig==0) = 0;
     g_m_w2= g_m_w2';
 
@@ -72,10 +72,10 @@ for i=1:(nrSteps)
     for j=1:nrSamples
         %compute the entropy term
         [grb,hrb] = neg_log_gmm(zSampled(:,j),logRBindicator(:,j),mixMeans,mixPrecs);
-        % grb = - \nabla_z log q(z^*)
-        % hrb = - \nabla_z^2 log q(z^*)
+        % grb = - \nabla_z log q(z)
+        % hrb = - \nabla_z^2 log q(z)
         for c=1:nrComponents
-            lwt = logRBindicator(c,j) - log_sxxWeights(c);
+            lwt = logRBindicator(c,j) - log_sxxWeights(c); %Note: q(w|z)/q(w) = q(z|w)/q(z) = \delta (defined at the paper)
             sa2(:,c) = sa2(:,c) + weightProd(lwt,grad{j}+grb);
             sH2(:,:,c) = sH2(:,:,c) + weightProd(lwt,hess{j}+hrb);
         end
