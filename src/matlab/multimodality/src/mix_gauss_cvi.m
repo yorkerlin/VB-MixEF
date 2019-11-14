@@ -66,7 +66,7 @@ for i=1:(nrSteps)
     g_m_w2(sig==0) = 0;
     g_m_w2= g_m_w2';
 
-    %the following double loop can be improved by using parallelism
+    %the following double loop can be removed by using vectorization
     sa2 = zeros(k,nrComponents);
     sH2 = zeros(k,k,nrComponents);
     for j=1:nrSamples
@@ -83,9 +83,7 @@ for i=1:(nrSteps)
     gmu = sa2/nrSamples;
     gV = sH2/(2.0*nrSamples);
 
-
     lr1 = stepSize;
-
     %line search for stepsize
     c = 1;
     while 1
