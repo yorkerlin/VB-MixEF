@@ -5,6 +5,6 @@ Code for ICML 2019 paper on [Fast and Simple Natural-Gradient Variational Infere
   * added a [poster](https://github.com/yorkerlin/VB-MixEF/blob/master/poster_main.pdf) of the main paper.  [done]  
   * [skewness] added a Matlab [implementation](https://github.com/yorkerlin/VB-MixEF/tree/master/src/matlab/skewness) for the toy example using skew Gaussian and exponentially modified Gaussian. [done] 
   * [multi-modality] added a Matlab [implementation](https://github.com/yorkerlin/VB-MixEF/tree/master/src/matlab/multimodality) for the toy example using MoG. The implementation is based on this [repo](https://github.com/TimSalimans/LinRegVB) [done]  
-  For an efficient MOG implementaiton（which is at least 10 times faster than this version), please see new [repo](https://github.com/yorkerlin/iBayesLRule) based on our ICML 2020 paper.
+  For an efficient MOG implementaiton using vectorization（which is at least 10 times faster than this version), please see new [repo](https://github.com/yorkerlin/iBayesLRule) based on our ICML 2020 paper.
   * [heavy tails] To add a Matlab implementation for BLR using t-distribution and  symmetric normal inverse Gaussian
   * To add a Python implementation for Vadam extensions
