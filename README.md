@@ -1,6 +1,7 @@
+For an efficient MOG implementaiton using vectorization（which is 20 times faster than this version), please use new [repo](https://github.com/yorkerlin/iBayesLRule) based on our ICML 2020 paper.
+
 Code for ICML 2019 paper on [Fast and Simple Natural-Gradient Variational Inference with Mixture of Exponential-family Approximations](https://arxiv.org/abs/1906.02914)
 
-For an efficient MOG implementaiton using vectorization（which is 20 times faster than this version), please use new [repo](https://github.com/yorkerlin/iBayesLRule) based on our ICML 2020 paper.
 * To-do List:
   * added a [poster](https://github.com/yorkerlin/VB-MixEF/blob/master/poster_workshop.pdf) and a technical [report](https://arxiv.org/abs/1910.13398) about the gradient identities used in the paper (To appear at the ICML workshop on Stein's method) [done]
   * added a [poster](https://github.com/yorkerlin/VB-MixEF/blob/master/poster_main.pdf) of the main paper.  [done]  
