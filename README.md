@@ -1,4 +1,4 @@
-For an efficient MOG implementaiton using vectorization（which is 20 times faster than this repo), please use this new [repo](https://github.com/yorkerlin/iBayesLRule) based on our ICML 2020 paper.
+For an efficient mixture of Gaussians (MOG) implementaiton using vectorization（which is 20 times faster than this repo), please use this new [repo](https://github.com/yorkerlin/iBayesLRule) based on our ICML 2020 paper.
 
 Code for ICML 2019 paper on [Fast and Simple Natural-Gradient Variational Inference with Mixture of Exponential-family Approximations](https://arxiv.org/abs/1906.02914)
 
